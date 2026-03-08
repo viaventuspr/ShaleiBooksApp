@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Shalei Book Shop - පොත්, පාසල් සහ කාර්යාලීය ලිපිද්‍රව්‍ය සඳහා ශ්‍රී ලංකාවේ ප්‍රමුඛතම සාප්පුව">
+<title>Shalei Book Shop | පොත් · පාසල් · කාර්යාලය</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208;
+    --cream: #fdf6e9;
+    --warm: #f5ead6;
+    --amber: #c8841a;
+    --amber-light: #e8a832;
+    --rust: #9e3a1a;
+    --sage: #4a6741;
+    --muted: #8a7a65;
+    --card-bg: #fffdf7;
+    --border: #e8dcc8;
+    --shadow: rgba(26,18,8,0.12);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'DM Sans',sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    overflow-x:hidden;
+  }
+
+  /* ── GRAIN OVERLAY ── */
+  body::before{
+    content:'';position:fixed;inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events:none;z-index:9999;opacity:.4;
+  }
+
+  /* ── ANNOUNCEMENT BAR ── */
+  .announcement{
+    background:var(--ink);color:var(--amber-light);
+    text-align:center;padding:10px 20px;font-size:13px;font-weight:500;
+    letter-spacing:.5px;
+  }
+  .announcement span{color:#fff;margin:0 8px}
+
+  /* ── HEADER ── */
+  header{
+    background:var(--card-bg);border-bottom:2px solid var(--ink);
+    position:sticky;top:0;z-index:1000;
+    box-shadow:0 4px 20px var(--shadow);
+  }
+  .header-inner{
+    max-width:1280px;margin:0 auto;padding:0 24px;
+    display:flex;align-items:center;gap:24px;height:72px;
+  }
+  .logo{
+    font-family:'Playfair Display',serif;font-size:26px;font-weight:900;
+    color:var(--ink);text-decoration:none;white-space:nowrap;flex-shrink:0;
+    display:flex;align-items:center;gap:10px;
+  }
+  .logo-icon{
+    width:40px;height:40px;background:var(--ink);border-radius:8px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:20px;flex-shrink:0;
+  }
+  .logo-text span{color:var(--amber);display:block;font-size:11px;font-family:'DM Sans',sans-serif;font-weight:400;letter-spacing:2px;text-transform:uppercase}
+
+  /* Search */
+  .search-bar{
+    flex:1;max-width:520px;position:relative;
+  }
+  .search-bar input{
+    width:100%;padding:11px 20px 11px 48px;
+    border:2px solid var(--border);border-radius:50px;
+    background:var(--warm);font-size:14px;font-family:'DM Sans',sans-serif;
+    outline:none;transition:.2s;color:var(--ink);
+  }
+  .search-bar input:focus{border-color:var(--amber);background:#fff}
+  .search-bar input::placeholder{color:var(--muted)}
+  .search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--muted)}
+  .search-btn{
+    position:absolute;right:6px;top:50%;transform:translateY(-50%);
+    background:var(--ink);color:var(--amber-light);border:none;
+    padding:7px 16px;border-radius:50px;font-size:12px;font-weight:600;cursor:pointer;
+    font-family:'DM Sans',sans-serif;letter-spacing:.5px;transition:.2s;
+  }
+  .search-btn:hover{background:var(--amber)}
+
+  /* Filter pills */
+  .search-filters{
+    display:flex;gap:8px;margin-top:6px;flex-wrap:wrap;
+  }
+  .filter-pill{
+    padding:4px 12px;border:1px solid var(--border);border-radius:50px;
+    font-size:11px;cursor:pointer;background:var(--warm);color:var(--muted);
+    transition:.2s;font-family:'DM Sans',sans-serif;font-weight:500;
+  }
+  .filter-pill:hover,.filter-pill.active{background:var(--ink);color:var(--amber-light);border-color:var(--ink)}
+
+  /* Header actions */
+  .header-actions{display:flex;align-items:center;gap:12px;flex-shrink:0}
+  .icon-btn{
+    width:44px;height:44px;border:2px solid var(--border);border-radius:50%;
+    background:var(--warm);display:flex;align-items:center;justify-content:center;
+    cursor:pointer;font-size:20px;position:relative;transition:.2s;text-decoration:none;
+  }
+  .icon-btn:hover{border-color:var(--ink);background:var(--ink);color:var(--amber-light)}
+  .cart-badge{
+    position:absolute;top:-4px;right:-4px;background:var(--rust);
+    color:#fff;border-radius:50%;width:18px;height:18px;font-size:10px;
+    display:flex;align-items:center;justify-content:center;font-weight:700;
+  }
+  .btn-primary{
+    padding:10px 22px;background:var(--ink);color:var(--amber-light);
+    border:none;border-radius:50px;font-size:13px;font-weight:600;
+    cursor:pointer;font-family:'DM Sans',sans-serif;letter-spacing:.5px;
+    transition:.2s;text-decoration:none;display:inline-flex;align-items:center;gap:6px;
+  }
+  .btn-primary:hover{background:var(--amber);color:var(--ink)}
+
+  /* ── NAV ── */
+  nav{background:var(--ink)}
+  .nav-inner{
+    max-width:1280px;margin:0 auto;padding:0 24px;
+    display:flex;align-items:center;gap:4px;overflow-x:auto;
+    scrollbar-width:none;
+  }
+  .nav-inner::-webkit-scrollbar{display:none}
+  .nav-link{
+    color:#ccc;text-decoration:none;padding:14px 18px;
+    font-size:13px;font-weight:500;white-space:nowrap;
+    transition:.2s;border-bottom:3px solid transparent;display:flex;align-items:center;gap:6px;
+  }
+  .nav-link:hover,.nav-link.active{color:var(--amber-light);border-bottom-color:var(--amber)}
+
+  /* ── HERO ── */
+  .hero{
+    background:var(--ink);
+    position:relative;overflow:hidden;padding:80px 24px;
+    min-height:520px;display:flex;align-items:center;
+  }
+  .hero-bg{
+    position:absolute;inset:0;
+    background:radial-gradient(ellipse 60% 80% at 80% 50%,#3d2a10 0%,transparent 70%),
+               radial-gradient(ellipse 40% 60% at 10% 80%,#1e3a1a 0%,transparent 60%);
+  }
+  .hero-pattern{
+    position:absolute;inset:0;opacity:.04;
+    background-image:repeating-linear-gradient(0deg,#fff 0,#fff 1px,transparent 1px,transparent 40px),
+                     repeating-linear-gradient(90deg,#fff 0,#fff 1px,transparent 1px,transparent 40px);
+  }
+  .hero-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:1;width:100%}
+  .hero-tag{
+    display:inline-flex;align-items:center;gap:8px;
+    background:rgba(200,132,26,.15);border:1px solid var(--amber);
+    color:var(--amber-light);padding:6px 16px;border-radius:50px;
+    font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px;
+  }
+  .hero h1{
+    font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,64px);
+    font-weight:900;color:#fff;line-height:1.1;margin-bottom:20px;
+  }
+  .hero h1 em{color:var(--amber-light);font-style:normal}
+  .hero p{color:#bbb;font-size:17px;line-height:1.7;margin-bottom:32px;max-width:480px}
+  .hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+  .btn-outline{
+    padding:12px 28px;border:2px solid rgba(255,255,255,.3);color:#fff;
+    border-radius:50px;font-size:14px;font-weight:600;cursor:pointer;
+    font-family:'DM Sans',sans-serif;background:transparent;transition:.2s;text-decoration:none;
+    display:inline-flex;align-items:center;gap:6px;
+  }
+  .btn-outline:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+  .hero-stats{
+    display:flex;gap:32px;margin-top:48px;padding-top:32px;
+    border-top:1px solid rgba(255,255,255,.1);
+  }
+  .stat-item{text-align:center}
+  .stat-num{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:var(--amber-light)}
+  .stat-label{font-size:12px;color:#888;margin-top:2px}
+
+  /* Hero visual */
+  .hero-visual{
+    display:grid;grid-template-columns:1fr 1fr;gap:12px;
+    transform:rotate(2deg);
+  }
+  .book-card{
+    background:var(--card-bg);border-radius:12px;padding:20px;
+    border:2px solid rgba(255,255,255,.08);transition:.3s;cursor:pointer;
+    position:relative;overflow:hidden;
+  }
+  .book-card::before{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(135deg,rgba(200,132,26,.05),transparent);
+  }
+  .book-card:hover{transform:translateY(-4px) rotate(-1deg);border-color:var(--amber)}
+  .book-card:nth-child(2){margin-top:24px}
+  .book-card:nth-child(3){margin-top:-12px}
+  .book-emoji{font-size:36px;margin-bottom:10px;display:block}
+  .book-title{font-size:13px;font-weight:600;color:#fff;margin-bottom:4px}
+  .book-price{font-size:16px;font-weight:700;color:var(--amber-light)}
+  .book-badge{
+    position:absolute;top:10px;right:10px;
+    background:var(--rust);color:#fff;font-size:10px;font-weight:700;
+    padding:3px 8px;border-radius:50px;
+  }
+
+  /* ── SECTION ── */
+  .section{padding:72px 24px}
+  .section-inner{max-width:1280px;margin:0 auto}
+  .section-header{
+    display:flex;align-items:flex-end;justify-content:space-between;
+    margin-bottom:40px;gap:20px;flex-wrap:wrap;
+  }
+  .section-tag{
+    font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+    color:var(--amber);margin-bottom:8px;
+  }
+  .section-title{
+    font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,40px);
+    font-weight:900;color:var(--ink);line-height:1.2;
+  }
+  .see-all{
+    color:var(--amber);font-size:13px;font-weight:600;text-decoration:none;
+    display:flex;align-items:center;gap:4px;border-bottom:1px solid var(--amber);
+    padding-bottom:2px;white-space:nowrap;
+  }
+
+  /* ── CATEGORY GRID ── */
+  .category-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;
+  }
+  .cat-card{
+    background:var(--card-bg);border:2px solid var(--border);border-radius:16px;
+    padding:28px 20px;text-align:center;cursor:pointer;transition:.3s;
+    text-decoration:none;color:inherit;position:relative;overflow:hidden;
+  }
+  .cat-card::after{
+    content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
+    background:var(--amber);transform:scaleX(0);transition:.3s;transform-origin:left;
+  }
+  .cat-card:hover{transform:translateY(-4px);border-color:var(--amber);box-shadow:0 12px 40px var(--shadow)}
+  .cat-card:hover::after{transform:scaleX(1)}
+  .cat-emoji{font-size:44px;margin-bottom:12px;display:block}
+  .cat-name{font-weight:700;font-size:16px;margin-bottom:6px}
+  .cat-count{font-size:13px;color:var(--muted)}
+
+  /* ── PRODUCT GRID ── */
+  .product-grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;
+  }
+  .product-card{
+    background:var(--card-bg);border:2px solid var(--border);border-radius:16px;
+    overflow:hidden;transition:.3s;cursor:pointer;position:relative;
+  }
+  .product-card:hover{transform:translateY(-6px);box-shadow:0 20px 60px var(--shadow);border-color:var(--amber)}
+  .product-img{
+    height:180px;background:var(--warm);display:flex;align-items:center;
+    justify-content:center;font-size:64px;position:relative;overflow:hidden;
+  }
+  .product-img-bg{
+    position:absolute;inset:0;
+    background:radial-gradient(circle at center,rgba(200,132,26,.1),transparent 70%);
+  }
+  .badge{
+    position:absolute;top:12px;left:12px;padding:4px 10px;border-radius:50px;
+    font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;
+  }
+  .badge-new{background:var(--sage);color:#fff}
+  .badge-sale{background:var(--rust);color:#fff}
+  .badge-hot{background:var(--amber);color:var(--ink)}
+  .wishlist-btn{
+    position:absolute;top:12px;right:12px;width:32px;height:32px;
+    background:#fff;border-radius:50%;display:flex;align-items:center;
+    justify-content:center;font-size:16px;cursor:pointer;transition:.2s;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+  }
+  .wishlist-btn:hover{transform:scale(1.2)}
+  .product-info{padding:16px}
+  .product-category{font-size:11px;color:var(--amber);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+  .product-name{font-weight:700;font-size:15px;margin-bottom:4px;color:var(--ink)}
+  .product-author{font-size:12px;color:var(--muted);margin-bottom:10px}
+  .product-bottom{display:flex;align-items:center;justify-content:space-between}
+  .price-group{}
+  .original-price{font-size:12px;color:var(--muted);text-decoration:line-through}
+  .sale-price{font-size:20px;font-weight:700;color:var(--ink)}
+  .currency{font-size:13px;color:var(--muted);font-weight:400}
+  .add-cart-btn{
+    width:38px;height:38px;background:var(--ink);color:var(--amber-light);
+    border:none;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:18px;cursor:pointer;transition:.2s;flex-shrink:0;
+  }
+  .add-cart-btn:hover{background:var(--amber);color:var(--ink);transform:scale(1.1)}
+  .stock-bar{
+    height:3px;background:var(--border);border-radius:2px;margin-top:12px;overflow:hidden;
+  }
+  .stock-fill{height:100%;background:var(--sage);border-radius:2px;transition:width .5s}
+  .stock-text{font-size:11px;color:var(--muted);margin-top:4px}
+
+  /* ── FEATURES ── */
+  .features{background:var(--ink);padding:80px 24px}
+  .features-grid{
+    max-width:1280px;margin:0 auto;
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;
+  }
+  .feature-card{
+    background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+    border-radius:16px;padding:28px;transition:.3s;
+  }
+  .feature-card:hover{background:rgba(200,132,26,.1);border-color:var(--amber)}
+  .feature-icon{font-size:36px;margin-bottom:16px;display:block}
+  .feature-title{font-size:17px;font-weight:700;color:#fff;margin-bottom:8px}
+  .feature-desc{font-size:14px;color:#888;line-height:1.6}
+
+  /* ── PAYMENT SECTION ── */
+  .payment-section{background:var(--warm);padding:64px 24px}
+  .payment-inner{max-width:1280px;margin:0 auto}
+  .payment-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:40px}
+  .payment-card{
+    background:var(--card-bg);border:2px solid var(--border);border-radius:16px;
+    padding:28px;display:flex;align-items:flex-start;gap:16px;transition:.3s;
+  }
+  .payment-card:hover{border-color:var(--amber);transform:translateY(-2px)}
+  .payment-icon{
+    width:52px;height:52px;border-radius:12px;display:flex;
+    align-items:center;justify-content:center;font-size:26px;flex-shrink:0;
+  }
+  .pi-card{background:#e8f0fe}
+  .pi-cod{background:#e8f5e9}
+  .pi-bank{background:#fff3e0}
+  .payment-name{font-weight:700;font-size:16px;margin-bottom:6px}
+  .payment-desc{font-size:13px;color:var(--muted);line-height:1.5}
+
+  /* ── SHIPPING ── */
+  .shipping-calc{
+    background:var(--ink);color:#fff;border-radius:20px;padding:40px;
+    max-width:600px;margin:40px auto 0;
+  }
+  .shipping-calc h3{font-family:'Playfair Display',serif;font-size:24px;margin-bottom:6px;color:var(--amber-light)}
+  .shipping-calc p{color:#888;margin-bottom:24px;font-size:14px}
+  .calc-row{display:flex;gap:12px;flex-wrap:wrap}
+  .calc-input{
+    flex:1;min-width:140px;padding:12px 16px;background:rgba(255,255,255,.06);
+    border:1.5px solid rgba(255,255,255,.1);border-radius:10px;color:#fff;
+    font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:.2s;
+  }
+  .calc-input:focus{border-color:var(--amber);background:rgba(200,132,26,.08)}
+  .calc-input option{background:var(--ink)}
+  .calc-result{
+    background:rgba(200,132,26,.15);border:1px solid var(--amber);
+    border-radius:10px;padding:14px 20px;margin-top:16px;
+    display:flex;justify-content:space-between;align-items:center;
+    opacity:0;transition:.3s;
+  }
+  .calc-result.show{opacity:1}
+  .calc-label{font-size:13px;color:#aaa}
+  .calc-amount{font-size:22px;font-weight:700;color:var(--amber-light)}
+
+  /* ── TRACKING ── */
+  .tracking-section{padding:72px 24px;background:var(--card-bg)}
+  .tracking-inner{max-width:680px;margin:0 auto;text-align:center}
+  .track-form{
+    display:flex;gap:12px;margin:32px 0;flex-wrap:wrap;justify-content:center;
+  }
+  .track-input{
+    flex:1;min-width:240px;padding:14px 24px;border:2px solid var(--border);
+    border-radius:50px;font-size:15px;font-family:'DM Sans',sans-serif;
+    background:var(--warm);outline:none;transition:.2s;
+  }
+  .track-input:focus{border-color:var(--amber);background:#fff}
+  .track-btn{
+    padding:14px 32px;background:var(--ink);color:var(--amber-light);
+    border:none;border-radius:50px;font-size:14px;font-weight:700;
+    cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s;
+  }
+  .track-btn:hover{background:var(--amber);color:var(--ink)}
+  .tracking-steps{
+    display:flex;justify-content:center;gap:0;margin-top:32px;flex-wrap:wrap;
+    position:relative;
+  }
+  .track-step{
+    display:flex;flex-direction:column;align-items:center;flex:1;min-width:100px;
+    position:relative;
+  }
+  .track-step:not(:last-child)::after{
+    content:'';position:absolute;top:20px;left:50%;right:-50%;
+    height:2px;background:var(--border);z-index:0;
+  }
+  .track-step.done::after{background:var(--sage)}
+  .step-dot{
+    width:40px;height:40px;border-radius:50%;border:2px solid var(--border);
+    background:var(--warm);display:flex;align-items:center;justify-content:center;
+    font-size:18px;position:relative;z-index:1;margin-bottom:8px;
+  }
+  .track-step.done .step-dot{background:var(--sage);border-color:var(--sage);color:#fff}
+  .track-step.active .step-dot{background:var(--amber);border-color:var(--amber);color:var(--ink)}
+  .step-label{font-size:12px;font-weight:600;color:var(--muted);text-align:center}
+  .track-step.done .step-label,.track-step.active .step-label{color:var(--ink)}
+
+  /* ── REVIEWS ── */
+  .reviews-section{padding:72px 24px;background:var(--warm)}
+  .reviews-grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;
+    margin-top:40px;
+  }
+  .review-card{
+    background:var(--card-bg);border:2px solid var(--border);border-radius:16px;
+    padding:24px;transition:.3s;
+  }
+  .review-card:hover{border-color:var(--amber);transform:translateY(-2px)}
+  .review-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}
+  .reviewer{display:flex;align-items:center;gap:12px}
+  .avatar{
+    width:44px;height:44px;border-radius:50%;background:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-size:18px;color:var(--amber-light);font-weight:700;flex-shrink:0;
+  }
+  .reviewer-name{font-weight:700;font-size:15px}
+  .reviewer-type{font-size:12px;color:var(--muted)}
+  .stars{color:var(--amber);font-size:16px;letter-spacing:1px}
+  .review-text{font-size:14px;color:var(--ink);line-height:1.7}
+  .review-product{font-size:12px;color:var(--amber);font-weight:600;margin-top:10px}
+
+  /* ── CART DRAWER ── */
+  .cart-overlay{
+    position:fixed;inset:0;background:rgba(26,18,8,.5);
+    z-index:2000;opacity:0;pointer-events:none;transition:.3s;
+    backdrop-filter:blur(4px);
+  }
+  .cart-overlay.open{opacity:1;pointer-events:all}
+  .cart-drawer{
+    position:fixed;right:0;top:0;bottom:0;width:min(400px,100vw);
+    background:var(--card-bg);z-index:2001;
+    transform:translateX(100%);transition:.35s cubic-bezier(.4,0,.2,1);
+    display:flex;flex-direction:column;
+    box-shadow:-8px 0 40px var(--shadow);
+  }
+  .cart-drawer.open{transform:translateX(0)}
+  .cart-head{
+    padding:24px;border-bottom:2px solid var(--border);
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .cart-head h3{font-family:'Playfair Display',serif;font-size:22px;font-weight:900}
+  .close-btn{
+    width:36px;height:36px;border:2px solid var(--border);border-radius:50%;
+    background:var(--warm);cursor:pointer;font-size:18px;display:flex;
+    align-items:center;justify-content:center;transition:.2s;
+  }
+  .close-btn:hover{background:var(--ink);color:var(--amber-light);border-color:var(--ink)}
+  .cart-items{flex:1;overflow-y:auto;padding:20px}
+  .cart-item{
+    display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);
+    align-items:center;
+  }
+  .cart-item-emoji{font-size:36px;flex-shrink:0}
+  .cart-item-info{flex:1}
+  .cart-item-name{font-weight:700;font-size:14px;margin-bottom:4px}
+  .cart-item-price{color:var(--amber);font-weight:600;font-size:15px}
+  .qty-control{display:flex;align-items:center;gap:8px;margin-top:6px}
+  .qty-btn{
+    width:26px;height:26px;border:1.5px solid var(--border);border-radius:6px;
+    background:var(--warm);cursor:pointer;font-size:14px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;transition:.2s;
+  }
+  .qty-btn:hover{background:var(--ink);color:var(--amber-light);border-color:var(--ink)}
+  .qty-num{font-weight:700;font-size:14px;min-width:24px;text-align:center}
+  .remove-item{margin-left:auto;cursor:pointer;font-size:18px;color:var(--muted);transition:.2s}
+  .remove-item:hover{color:var(--rust)}
+  .cart-footer{padding:20px;border-top:2px solid var(--border)}
+  .cart-total{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:16px;padding:14px 0;border-bottom:1px solid var(--border);
+  }
+  .total-label{font-weight:600;font-size:15px}
+  .total-amount{font-family:'Playfair Display',serif;font-size:26px;font-weight:900;color:var(--ink)}
+  .checkout-btn{
+    width:100%;padding:16px;background:var(--ink);color:var(--amber-light);
+    border:none;border-radius:50px;font-size:16px;font-weight:700;
+    cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s;margin-bottom:10px;
+  }
+  .checkout-btn:hover{background:var(--amber);color:var(--ink)}
+  .guest-note{text-align:center;font-size:12px;color:var(--muted)}
+  .cart-empty{
+    text-align:center;padding:60px 20px;
+    display:flex;flex-direction:column;align-items:center;gap:16px;
+  }
+  .cart-empty-icon{font-size:56px}
+  .cart-empty h4{font-family:'Playfair Display',serif;font-size:20px}
+  .cart-empty p{font-size:14px;color:var(--muted)}
+
+  /* ── TOAST ── */
+  .toast{
+    position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--ink);color:var(--amber-light);padding:12px 24px;
+    border-radius:50px;font-size:14px;font-weight:600;z-index:3000;
+    opacity:0;transition:.3s;white-space:nowrap;
+    box-shadow:0 8px 30px rgba(0,0,0,.3);
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* ── WHATSAPP ── */
+  .whatsapp-float{
+    position:fixed;bottom:28px;right:28px;z-index:1500;
+    width:58px;height:58px;background:#25d366;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:28px;box-shadow:0 6px 24px rgba(37,211,102,.4);
+    cursor:pointer;transition:.3s;text-decoration:none;
+    animation:pulse-wa 2s infinite;
+  }
+  .whatsapp-float:hover{transform:scale(1.12);box-shadow:0 10px 32px rgba(37,211,102,.5)}
+  @keyframes pulse-wa{
+    0%,100%{box-shadow:0 6px 24px rgba(37,211,102,.4)}
+    50%{box-shadow:0 6px 40px rgba(37,211,102,.7),0 0 0 8px rgba(37,211,102,.1)}
+  }
+  .whatsapp-label{
+    position:fixed;bottom:42px;right:96px;background:var(--ink);color:#fff;
+    padding:8px 14px;border-radius:10px;font-size:13px;font-weight:600;
+    z-index:1500;white-space:nowrap;opacity:0;transition:.2s;pointer-events:none;
+  }
+  .whatsapp-float:hover ~ .whatsapp-label{opacity:1}
+
+  /* ── NEWSLETTER ── */
+  .newsletter{background:var(--ink);padding:64px 24px;text-align:center}
+  .newsletter-inner{max-width:560px;margin:0 auto}
+  .newsletter h2{font-family:'Playfair Display',serif;font-size:34px;color:#fff;margin-bottom:10px}
+  .newsletter p{color:#888;margin-bottom:28px;font-size:15px}
+  .newsletter-form{display:flex;gap:10px;max-width:440px;margin:0 auto;flex-wrap:wrap;justify-content:center}
+  .newsletter-input{
+    flex:1;min-width:220px;padding:14px 20px;
+    background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.15);
+    border-radius:50px;color:#fff;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;
+  }
+  .newsletter-input:focus{border-color:var(--amber)}
+  .newsletter-input::placeholder{color:#666}
+  .newsletter-btn{
+    padding:14px 28px;background:var(--amber);color:var(--ink);border:none;
+    border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;
+    font-family:'DM Sans',sans-serif;transition:.2s;
+  }
+  .newsletter-btn:hover{background:var(--amber-light)}
+
+  /* ── FOOTER ── */
+  footer{background:#110d06;padding:56px 24px 24px;color:#888}
+  .footer-grid{
+    max-width:1280px;margin:0 auto;
+    display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px;
+    flex-wrap:wrap;
+  }
+  .footer-brand .logo{margin-bottom:14px;display:inline-flex}
+  .footer-brand p{font-size:14px;line-height:1.7;max-width:280px}
+  .footer-contact{margin-top:20px;font-size:14px}
+  .footer-contact a{color:var(--amber);text-decoration:none}
+  .footer-col h4{color:#fff;font-size:14px;font-weight:700;letter-spacing:.5px;margin-bottom:16px;text-transform:uppercase}
+  .footer-links{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .footer-links a{color:#888;text-decoration:none;font-size:14px;transition:.2s}
+  .footer-links a:hover{color:var(--amber-light)}
+  .footer-bottom{
+    max-width:1280px;margin:0 auto;
+    padding-top:24px;border-top:1px solid rgba(255,255,255,.06);
+    display:flex;justify-content:space-between;align-items:center;
+    flex-wrap:wrap;gap:12px;font-size:13px;
+  }
+  .ssl-badge{
+    display:flex;align-items:center;gap:8px;
+    background:rgba(74,103,65,.2);border:1px solid rgba(74,103,65,.4);
+    color:#7ab870;padding:6px 14px;border-radius:50px;font-size:12px;font-weight:600;
+  }
+
+  /* ── MODAL (Checkout) ── */
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(26,18,8,.6);
+    z-index:3000;display:flex;align-items:center;justify-content:center;
+    opacity:0;pointer-events:none;transition:.3s;
+    backdrop-filter:blur(6px);padding:20px;
+  }
+  .modal-overlay.open{opacity:1;pointer-events:all}
+  .modal{
+    background:var(--card-bg);border-radius:24px;width:100%;max-width:600px;
+    max-height:90vh;overflow-y:auto;
+    transform:translateY(30px);transition:.35s;
+    box-shadow:0 40px 100px rgba(0,0,0,.4);
+  }
+  .modal-overlay.open .modal{transform:translateY(0)}
+  .modal-head{
+    padding:28px 32px;border-bottom:2px solid var(--border);
+    display:flex;justify-content:space-between;align-items:center;
+    position:sticky;top:0;background:var(--card-bg);z-index:1;
+  }
+  .modal-head h3{font-family:'Playfair Display',serif;font-size:24px;font-weight:900}
+  .modal-body{padding:28px 32px}
+  .form-section{margin-bottom:28px}
+  .form-section h4{font-size:14px;font-weight:700;color:var(--amber);letter-spacing:1px;text-transform:uppercase;margin-bottom:14px}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .form-group{display:flex;flex-direction:column;gap:6px}
+  .form-group.full{grid-column:1/-1}
+  .form-label{font-size:12px;font-weight:600;color:var(--ink);letter-spacing:.3px}
+  .form-input{
+    padding:12px 16px;border:2px solid var(--border);border-radius:10px;
+    font-size:14px;font-family:'DM Sans',sans-serif;background:var(--warm);
+    outline:none;transition:.2s;color:var(--ink);
+  }
+  .form-input:focus{border-color:var(--amber);background:#fff}
+  .payment-methods{display:flex;flex-direction:column;gap:10px}
+  .payment-method{
+    display:flex;align-items:center;gap:14px;padding:14px 18px;
+    border:2px solid var(--border);border-radius:12px;cursor:pointer;transition:.2s;
+  }
+  .payment-method:hover,.payment-method.selected{border-color:var(--amber);background:rgba(200,132,26,.05)}
+  .payment-method input[type=radio]{accent-color:var(--amber);width:18px;height:18px}
+  .payment-method-info{flex:1}
+  .pm-name{font-weight:700;font-size:14px}
+  .pm-desc{font-size:12px;color:var(--muted)}
+  .pm-icon{font-size:22px}
+  .place-order-btn{
+    width:100%;padding:16px;background:var(--ink);color:var(--amber-light);
+    border:none;border-radius:50px;font-size:16px;font-weight:700;
+    cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s;margin-top:10px;
+  }
+  .place-order-btn:hover{background:var(--amber);color:var(--ink)}
+
+  /* ── ADMIN PANEL ── */
+  .admin-bar{
+    background:var(--rust);color:#fff;text-align:center;
+    padding:8px 20px;font-size:13px;font-weight:600;
+    display:none;
+  }
+  .admin-bar.show{display:block}
+
+  /* ── TABS ── */
+  .tab-bar{
+    display:flex;gap:4px;background:var(--warm);border-radius:50px;
+    padding:4px;margin-bottom:32px;overflow-x:auto;width:fit-content;
+  }
+  .tab{
+    padding:10px 24px;border-radius:50px;font-size:14px;font-weight:600;
+    cursor:pointer;transition:.2s;white-space:nowrap;border:none;background:transparent;
+    font-family:'DM Sans',sans-serif;color:var(--muted);
+  }
+  .tab.active{background:var(--ink);color:var(--amber-light)}
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:768px){
+    .header-inner{flex-wrap:wrap;height:auto;padding:14px;gap:12px}
+    .search-bar{order:3;flex:0 0 100%;max-width:100%}
+    .hero-inner{grid-template-columns:1fr}
+    .hero-visual{display:none}
+    .footer-grid{grid-template-columns:1fr 1fr}
+    .form-grid{grid-template-columns:1fr}
+    .modal-body{padding:20px}
+    .modal-head{padding:20px}
+    .search-filters{display:none}
+  }
+  @media(max-width:480px){
+    .footer-grid{grid-template-columns:1fr}
+    .hero-stats{gap:20px}
+    .stat-num{font-size:24px}
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeInUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+  .fade-in{animation:fadeInUp .5s both}
+  .fade-in-1{animation-delay:.1s}
+  .fade-in-2{animation-delay:.2s}
+  .fade-in-3{animation-delay:.3s}
+  .fade-in-4{animation-delay:.4s}
+
+  /* Stars rating display */
+  .rating-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  .rating-stars{color:var(--amber);font-size:14px}
+  .rating-count{font-size:12px;color:var(--muted)}
+
+  /* Out of stock */
+  .out-of-stock .add-cart-btn{background:var(--border);cursor:not-allowed;color:var(--muted)}
+  .out-of-stock .add-cart-btn:hover{background:var(--border);color:var(--muted);transform:none}
+  .oos-label{font-size:11px;color:var(--rust);font-weight:600;margin-top:4px}
+</style>
+</head>
+<body>
+
+<!-- Admin Bar (hidden by default) -->
+<div class="admin-bar" id="adminBar">
+  🔧 Admin Mode Active — <a href="#" style="color:#ffd;text-decoration:underline" onclick="toggleAdmin()">Exit Admin</a>
+</div>
+
+<!-- Announcement -->
+<div class="announcement">
+  🚚 Rs. 2,000 ට වැඩි ඇණවුම් සඳහා නොමිලේ ගෙදරට <span>·</span> PayHere | COD | Bank Transfer <span>·</span> 📞 077 123 4567
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a class="logo" href="#">
+      <div class="logo-icon">📚</div>
+      <div class="logo-text">
+        Shalei
+        <span>Book Shop</span>
+      </div>
+    </a>
+
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="පොතක් නම, කතුවරයා, ISBN හෝ ද්‍රව්‍ය සොයන්න..." oninput="handleSearch(this.value)">
+      <button class="search-btn" onclick="handleSearch(document.getElementById('searchInput').value)">සොයන්න</button>
+    </div>
+
+    <div class="header-actions">
+      <a class="icon-btn" href="#" title="Wishlist">❤️</a>
+      <a class="icon-btn" href="#" onclick="openCart();return false" title="Cart">
+        🛒
+        <span class="cart-badge" id="cartBadge">0</span>
+      </a>
+      <button class="btn-primary" onclick="openCheckout()">ඇණවුම් කරන්න</button>
+    </div>
+  </div>
+
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px 10px">
+    <div class="search-filters">
+      <span class="filter-pill active" onclick="filterCategory('all',this)">සියල්ල</span>
+      <span class="filter-pill" onclick="filterCategory('novels',this)">Novels</span>
+      <span class="filter-pill" onclick="filterCategory('educational',this)">Educational</span>
+      <span class="filter-pill" onclick="filterCategory('kids',this)">Kids Books</span>
+      <span class="filter-pill" onclick="filterCategory('school',this)">School Stationery</span>
+      <span class="filter-pill" onclick="filterCategory('office',this)">Office Stationery</span>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-link active" href="#">🏠 මුල් පිටුව</a>
+    <a class="nav-link" href="#categories">📂 ප්‍රවර්ග</a>
+    <a class="nav-link" href="#products">📦 නිෂ්පාදන</a>
+    <a class="nav-link" href="#tracking">📍 ඇණවුම් ලුහුබැඳීම</a>
+    <a class="nav-link" href="#payments">💳 ගෙවීම්</a>
+    <a class="nav-link" href="#reviews">⭐ සමාලෝචන</a>
+    <a class="nav-link" href="#" onclick="openCheckout();return false">🛍️ ඇණවුම් කරන්න</a>
+    <a class="nav-link" href="#" onclick="toggleAdmin();return false" style="margin-left:auto">⚙️ Admin</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag fade-in">📚 ශ්‍රී ලංකාවේ විශ්වසනීය Book Shop</div>
+      <h1 class="fade-in fade-in-1">ඔබේ <em>දැනුමේ</em> ගමන ආරම්භ වෙන්නේ මෙතැනින්</h1>
+      <p class="fade-in fade-in-2">පොත්, පාසල් සහ කාර්යාලීය ලිපිද්‍රව්‍ය සියල්ල එක් තැනකින් — ඉක්මන් ගෙදර බෙදාහැරීමත් සමග.</p>
+      <div class="hero-btns fade-in fade-in-3">
+        <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">🛍️ දැන් සාප්පු යන්න</button>
+        <a class="btn-outline" href="#categories">📂 ප්‍රවර්ග බලන්න</a>
+      </div>
+      <div class="hero-stats fade-in fade-in-4">
+        <div class="stat-item"><div class="stat-num">2,500+</div><div class="stat-label">නිෂ්පාදන</div></div>
+        <div class="stat-item"><div class="stat-num">15,000+</div><div class="stat-label">සතුටු පාරිභෝගිකයින්</div></div>
+        <div class="stat-item"><div class="stat-num">24h</div><div class="stat-label">ගෙදර බෙදාහැරීම</div></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="book-card"><span class="book-emoji">📖</span><div class="book-title">Grade 6-11 Textbooks</div><div class="book-price">Rs. 450</div><div class="book-badge">Hot</div></div>
+      <div class="book-card"><span class="book-emoji">✏️</span><div class="book-title">Premium Pen Set</div><div class="book-price">Rs. 280</div></div>
+      <div class="book-card"><span class="book-emoji">🎒</span><div class="book-title">School Bag</div><div class="book-price">Rs. 1,850</div><div class="book-badge">Sale</div></div>
+      <div class="book-card"><span class="book-emoji">📓</span><div class="book-title">Exercise Books</div><div class="book-price">Rs. 95</div><div class="book-badge">New</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="section" id="categories">
+  <div class="section-inner">
+    <div class="section-header">
+      <div>
+        <div class="section-tag">ප්‍රධාන ප්‍රවර්ග</div>
+        <div class="section-title">ඔබට අවශ්‍ය දෙය සොයාගන්න</div>
+      </div>
+    </div>
+    <div class="category-grid">
+      <a class="cat-card" href="#products" onclick="filterCategory('novels',null)"><span class="cat-emoji">📗</span><div class="cat-name">Novels</div><div class="cat-count">350+ ශීර්ෂ</div></a>
+      <a class="cat-card" href="#products" onclick="filterCategory('educational',null)"><span class="cat-emoji">🎓</span><div class="cat-name">Educational</div><div class="cat-count">800+ නිෂ්පාදන</div></a>
+      <a class="cat-card" href="#products" onclick="filterCategory('kids',null)"><span class="cat-emoji">🧒</span><div class="cat-name">Kids Books</div><div class="cat-count">200+ ශීර්ෂ</div></a>
+      <a class="cat-card" href="#products" onclick="filterCategory('school',null)"><span class="cat-emoji">🎒</span><div class="cat-name">School Stationery</div><div class="cat-count">500+ නිෂ්පාදන</div></a>
+      <a class="cat-card" href="#products" onclick="filterCategory('office',null)"><span class="cat-emoji">🗂️</span><div class="cat-name">Office Stationery</div><div class="cat-count">400+ නිෂ්පාදන</div></a>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="section" id="products" style="background:var(--warm)">
+  <div class="section-inner">
+    <div class="section-header">
+      <div>
+        <div class="section-tag">නිෂ්පාදන</div>
+        <div class="section-title" id="productTitle">සියලු නිෂ්පාදන</div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <div class="tab-bar">
+          <button class="tab active" onclick="sortProducts('featured',this)">Featured</button>
+          <button class="tab" onclick="sortProducts('price-low',this)">මිල අඩු</button>
+          <button class="tab" onclick="sortProducts('price-high',this)">මිල වැඩි</button>
+          <button class="tab" onclick="sortProducts('rating',this)">Rating</button>
+        </div>
+      </div>
+    </div>
+    <div class="product-grid" id="productGrid"></div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="features-grid">
+    <div class="feature-card"><span class="feature-icon">🚚</span><div class="feature-title">ඉක්මන් ගෙදර බෙදාහැරීම</div><div class="feature-desc">Rs. 2,000+ ඇණවුම් සඳහා නොමිලේ. Colombo ප්‍රදේශය: 24 පැය. ද්‍රෝණිය: 2-3 දින.</div></div>
+    <div class="feature-card"><span class="feature-icon">🔒</span><div class="feature-title">ආරක්ෂිත ගෙවීම්</div><div class="feature-desc">SSL Encrypted checkout. PayHere, WebXPay, COD සහ Bank Transfer ගෙවීම් ක්‍රම.</div></div>
+    <div class="feature-card"><span class="feature-icon">↩️</span><div class="feature-title">පහසු ආපසු ගෙවීම්</div><div class="feature-desc">7 දිනක් ඇතුළත ආදේශය හෝ ආපසු ගෙවීම. ගැටළු නැතිව.</div></div>
+    <div class="feature-card"><span class="feature-icon">💬</span><div class="feature-title">WhatsApp සහාය</div><div class="feature-desc">සේවා කාලය: 8am - 8pm. ඉක්මන් පිළිතුරු සඳහා WhatsApp හා සම්බන්ධ වන්න.</div></div>
+    <div class="feature-card"><span class="feature-icon">📦</span><div class="feature-title">Stock ලබා ගත හැකි</div><div class="feature-desc">Real-time stock updates. ගෙන යාමට ද හෝ ගෙදරට ද — ඔබ කැමති ලෙස.</div></div>
+  </div>
+</section>
+
+<!-- PAYMENTS -->
+<section class="payment-section" id="payments">
+  <div class="payment-inner">
+    <div class="section-header">
+      <div>
+        <div class="section-tag">ගෙවීම් සහ ප්‍රවාහනය</div>
+        <div class="section-title">ඔබට ගැලපෙන ගෙවීම් ක්‍රමය</div>
+      </div>
+    </div>
+    <div class="payment-grid">
+      <div class="payment-card">
+        <div class="payment-icon pi-card">💳</div>
+        <div><div class="payment-name">Card / Mobile Wallet</div><div class="payment-desc">PayHere හෝ WebXPay හරහා Visa, Master, Frimi, Genie වලින් ගෙවන්න. ආරක්ෂිත encrypted ගෙවීම.</div></div>
+      </div>
+      <div class="payment-card">
+        <div class="payment-icon pi-cod">🤝</div>
+        <div><div class="payment-name">Cash on Delivery (COD)</div><div class="payment-desc">භාණ්ඩ ලැබූ පසු ගෙවන්න. Colombo සහ ප්‍රධාන නගර සඳහා. COD ගාස්තු Rs. 50.</div></div>
+      </div>
+      <div class="payment-card">
+        <div class="payment-icon pi-bank">🏦</div>
+        <div><div class="payment-name">Bank Transfer</div><div class="payment-desc">ඕනෑම බැංකුවකින් Transfer කර රිසිට්පත Upload කරන්න. Order 2-4 පැය ඇතුළත confirm කෙරේ.</div></div>
+      </div>
+    </div>
+    <!-- Shipping Calculator -->
+    <div class="shipping-calc">
+      <h3>🚚 Courier ගාස්තු ගණනය කරන්න</h3>
+      <p>ඔබේ ස්ථානය සහ ඇණවුම් බර ඇතුළත් කරන්න</p>
+      <div class="calc-row">
+        <select class="calc-input" id="shippingZone" onchange="calcShipping()">
+          <option value="">ප්‍රදේශය තෝරන්න</option>
+          <option value="colombo">Colombo (නගරය)</option>
+          <option value="western">Western Province</option>
+          <option value="other">අනෙකුත් පළාත්</option>
+          <option value="north">උතුරු / නැගෙනහිර</option>
+        </select>
+        <select class="calc-input" id="shippingWeight" onchange="calcShipping()">
+          <option value="">බර (kg)</option>
+          <option value="0.5">0.5 kg දක්වා</option>
+          <option value="1">1 kg දක්වා</option>
+          <option value="2">2 kg දක්වා</option>
+          <option value="5">5 kg දක්වා</option>
+          <option value="10">10 kg දක්වා</option>
+        </select>
+      </div>
+      <div class="calc-result" id="calcResult">
+        <div><div class="calc-label">Courier ගාස්තු (ස්ථාන සහ බර අනුව)</div><div style="font-size:13px;color:#888;margin-top:4px" id="calcNote"></div></div>
+        <div class="calc-amount" id="calcAmount">Rs. 0</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORDER TRACKING -->
+<section class="tracking-section" id="tracking">
+  <div class="tracking-inner">
+    <div class="section-tag" style="text-align:center">ඇණවුම් ලුහුබැඳීම</div>
+    <div class="section-title" style="text-align:center">ඔබේ ඇණවුම කොතැනද?</div>
+    <p style="text-align:center;color:var(--muted);margin-top:10px;font-size:15px">Order Number හෝ Phone Number ඇතුළු කරන්න</p>
+    <div class="track-form">
+      <input class="track-input" type="text" id="trackInput" placeholder="eg: SB-2024-00123 හෝ 077XXXXXXX">
+      <button class="track-btn" onclick="trackOrder()">📍 ලුහුබැඳීම</button>
+    </div>
+    <div id="trackResult" style="display:none">
+      <div style="background:var(--warm);border:2px solid var(--border);border-radius:16px;padding:20px;margin-bottom:24px;text-align:left">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+          <div><strong style="font-size:18px">ඇණවුම #SB-2024-00123</strong><div style="color:var(--muted);font-size:13px;margin-top:4px">Colombo, Nugegoda | 2024-12-15</div></div>
+          <div style="background:var(--sage);color:#fff;padding:6px 16px;border-radius:50px;font-size:13px;font-weight:700">🚚 බෙදාහැරිමේදී</div>
+        </div>
+      </div>
+      <div class="tracking-steps">
+        <div class="track-step done"><div class="step-dot">✓</div><div class="step-label">ලැබිණි</div></div>
+        <div class="track-step done"><div class="step-dot">✓</div><div class="step-label">තහවුරු</div></div>
+        <div class="track-step done"><div class="step-dot">✓</div><div class="step-label">Packed</div></div>
+        <div class="track-step active"><div class="step-dot">🚚</div><div class="step-label">බෙදාහැරීම</div></div>
+        <div class="track-step"><div class="step-dot">🏠</div><div class="step-label">ලබා දෙන ලදී</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews-section" id="reviews">
+  <div class="section-inner">
+    <div class="section-header">
+      <div>
+        <div class="section-tag">සමාලෝචන</div>
+        <div class="section-title">අපේ පාරිභෝගිකයින් කියන්නේ...</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-family:'Playfair Display',serif;font-size:48px;font-weight:900;color:var(--ink)">4.8</div>
+        <div class="stars">★★★★★</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:4px">1,240 සමාලෝචන</div>
+      </div>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card"><div class="review-header"><div class="reviewer"><div class="avatar">N</div><div><div class="reviewer-name">Nimasha Perera</div><div class="reviewer-type">👩‍🎓 සිසු</div></div></div><div class="stars">★★★★★</div></div><div class="review-text">"A/L textbooks ගෙන්නු ගත් ගෙදරටම ලබා දෙන ලදී. Packaging ඉතා හොඳ. Price ත් දිස්ත්‍රික් Book Shops වලට සාපේක්ෂව ලාභ."</div><div class="review-product">📗 A/L Combined Mathematics</div></div>
+      <div class="review-card"><div class="review-header"><div class="reviewer"><div class="avatar">K</div><div><div class="reviewer-name">Kamal Fernando</div><div class="reviewer-type">👨‍💼 ගුරුවරයා</div></div></div><div class="stars">★★★★★</div></div><div class="review-text">"Bulk stationery order ලබා ගත්තා. WhatsApp හරහා contact කළාම ඉක්මනින්ම respond කළා. ව්‍යාපෘති සඳහා again order කරන්නම්."</div><div class="review-product">✏️ School Stationery Set</div></div>
+      <div class="review-card"><div class="review-header"><div class="reviewer"><div class="avatar">S</div><div><div class="reviewer-name">Sanduni Rajapaksa</div><div class="reviewer-type">👩‍👧 දෙමාපිය</div></div></div><div class="stars">★★★★☆</div></div><div class="review-text">"Kids section ඉතා හොඳ. Children Books colorful සහ quality ද හොඳ. COD payment convenient. Next time ත් buy කරනවා."</div><div class="review-product">📘 Kids Story Books Pack</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <div class="newsletter-inner">
+    <h2>Offers miss කරන්නෙ එපා!</h2>
+    <p>නව පොත්, Discount Codes සහ Special Promotions ගැන ප්‍රථමයෙන් දැනගන්න.</p>
+    <div class="newsletter-form">
+      <input class="newsletter-input" type="email" placeholder="ඔබේ Email ලිපිනය">
+      <button class="newsletter-btn" onclick="showToast('ස්තූතියි! ඔබව Subscribe කර ඇත ✓')">Subscribe</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a class="logo" href="#"><div class="logo-icon">📚</div><div class="logo-text" style="color:#fff">Shalei <span style="color:#888">Book Shop</span></div></a>
+      <p>ශ්‍රී ලංකාවේ සිසුන්, ගුරුවරුන් සහ කාර්යාල සේවකයින් සඳහා සම්පූර්ණ book සහ stationery solution.</p>
+      <div class="footer-contact">📞 <a href="tel:0771234567">077 123 4567</a><br>📧 <a href="mailto:info@shaleibookshop.lk">info@shaleibookshop.lk</a><br>📍 No. 45, Galle Rd, Colombo 03</div>
+    </div>
+    <div class="footer-col"><h4>ශීඝ්‍ර සබැඳි</h4><ul class="footer-links"><li><a href="#">🏠 මුල් පිටුව</a></li><li><a href="#categories">📂 ප්‍රවර්ග</a></li><li><a href="#products">📦 නිෂ්පාදන</a></li><li><a href="#tracking">📍 ඇණවුම් ලුහුබැඳීම</a></li><li><a href="#reviews">⭐ සමාලෝචන</a></li></ul></div>
+    <div class="footer-col"><h4>ප්‍රවර්ග</h4><ul class="footer-links"><li><a href="#">📗 Novels</a></li><li><a href="#">🎓 Educational</a></li><li><a href="#">🧒 Kids Books</a></li><li><a href="#">🎒 School Stationery</a></li><li><a href="#">🗂️ Office Stationery</a></li></ul></div>
+    <div class="footer-col"><h4>සේවා</h4><ul class="footer-links"><li><a href="#">💳 ගෙවීම් ක්‍රම</a></li><li><a href="#">🚚 Shipping Info</a></li><li><a href="#">↩️ Returns Policy</a></li><li><a href="#">❓ FAQ</a></li><li><a href="#">📞 Contact Us</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2024 Shalei Book Shop. සියලු හිමිකම් ඇවිරිනි.</div>
+    <div class="ssl-badge">🔒 SSL Secured | https</div>
+    <div style="font-size:12px;color:#555">Powered by WooCommerce · PayHere · WebXPay</div>
+  </div>
+</footer>
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-head">
+    <h3>🛒 ඔබේ Cart</h3>
+    <button class="close-btn" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer" id="cartFooter"></div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal-overlay" id="checkoutModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>🛍️ Checkout</h3>
+      <button class="close-btn" onclick="closeCheckout()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-section">
+        <h4>👤 ඔබේ තොරතුරු</h4>
+        <div class="form-grid">
+          <div class="form-group"><label class="form-label">නම</label><input class="form-input" placeholder="ඔබේ සම්පූර්ණ නම"></div>
+          <div class="form-group"><label class="form-label">දුරකථන</label><input class="form-input" placeholder="07X XXX XXXX"></div>
+          <div class="form-group full"><label class="form-label">Email (විකල්ප)</label><input class="form-input" placeholder="email@example.com"></div>
+        </div>
+      </div>
+      <div class="form-section">
+        <h4>📍 බෙදාහැරීමේ ලිපිනය</h4>
+        <div class="form-grid">
+          <div class="form-group full"><label class="form-label">ලිපිනය</label><input class="form-input" placeholder="No., Street, City"></div>
+          <div class="form-group"><label class="form-label">ප්‍රදේශය</label><select class="form-input" onchange="updateShipping(this.value)"><option>Colombo</option><option>Gampaha</option><option>Kandy</option><option>Galle</option><option>Matara</option><option>Jaffna</option><option>Other</option></select></div>
+          <div class="form-group"><label class="form-label">Courier ගාස්තු</label><input class="form-input" id="checkoutShipping" value="Rs. 150" readonly style="background:var(--border)"></div>
+        </div>
+      </div>
+      <div class="form-section">
+        <h4>💳 ගෙවීම් ක්‍රමය</h4>
+        <div class="payment-methods">
+          <label class="payment-method selected">
+            <input type="radio" name="payment" value="card" checked onchange="selectPayment(this.parentElement)">
+            <span class="pm-icon">💳</span>
+            <div class="payment-method-info"><div class="pm-name">Card / Mobile Wallet</div><div class="pm-desc">Visa, Master, Frimi, Genie — PayHere / WebXPay</div></div>
+          </label>
+          <label class="payment-method">
+            <input type="radio" name="payment" value="cod" onchange="selectPayment(this.parentElement)">
+            <span class="pm-icon">🤝</span>
+            <div class="payment-method-info"><div class="pm-name">Cash on Delivery</div><div class="pm-desc">භාණ්ඩ ලැබූ පසු ගෙවන්න (+ Rs. 50)</div></div>
+          </label>
+          <label class="payment-method">
+            <input type="radio" name="payment" value="bank" onchange="selectPayment(this.parentElement)">
+            <span class="pm-icon">🏦</span>
+            <div class="payment-method-info"><div class="pm-name">Bank Transfer</div><div class="pm-desc">රිසිට්පත upload කරන්න</div></div>
+          </label>
+        </div>
+        <div id="bankUpload" style="display:none;margin-top:14px">
+          <div class="form-group"><label class="form-label">Bank Slip Upload</label><input class="form-input" type="file" accept="image/*,.pdf" style="padding:8px"></div>
+        </div>
+      </div>
+      <div style="background:var(--warm);border:2px solid var(--border);border-radius:12px;padding:18px;margin-bottom:16px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px"><span style="color:var(--muted)">නිෂ්පාදන</span><span id="orderSubtotal">Rs. 0</span></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px"><span style="color:var(--muted)">Shipping</span><span id="orderShipping">Rs. 150</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:18px;font-weight:700;padding-top:10px;border-top:1px solid var(--border)"><span>මුළු එකතුව</span><span id="orderTotal" style="color:var(--amber)">Rs. 0</span></div>
+      </div>
+      <button class="place-order-btn" onclick="placeOrder()">✓ ඇණවුම තබන්න</button>
+      <p style="text-align:center;font-size:12px;color:var(--muted);margin-top:10px">ගිණුමක් නොමැතිව Guest Checkout — ඔබේ privacy ආරක්ෂිතයි 🔒</p>
+    </div>
+  </div>
+</div>
+
+<!-- WhatsApp -->
+<a class="whatsapp-float" href="https://wa.me/94771234567?text=Hello%20Shalei%20Book%20Shop" target="_blank" title="WhatsApp Chat">💬</a>
+<div class="whatsapp-label">WhatsApp Chat</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── PRODUCTS DATA ──
+const products = [
+  {id:1,name:"Combined Mathematics",author:"H. Wijesuriya",category:"educational",emoji:"📗",price:850,original:950,stock:45,badge:"hot",rating:4.9,reviews:128},
+  {id:2,name:"Sinhala Novel - Ahasin Wakkal",author:"Martin Wickramasinghe",category:"novels",emoji:"📘",price:650,original:null,stock:18,badge:"",rating:4.7,reviews:89},
+  {id:3,name:"Kids Story Pack (5 Books)",author:"Various",category:"kids",emoji:"📚",price:1200,original:1500,stock:30,badge:"sale",rating:4.8,reviews:56},
+  {id:4,name:"Premium Pen Set (10 pcs)",author:null,category:"school",emoji:"✒️",price:280,original:null,stock:150,badge:"new",rating:4.6,reviews:34},
+  {id:5,name:"School Bag - Grade 6-11",author:null,category:"school",emoji:"🎒",price:2200,original:2800,stock:22,badge:"sale",rating:4.5,reviews:67},
+  {id:6,name:"Exercise Books Pack (12)",author:null,category:"school",emoji:"📓",price:360,original:null,stock:200,badge:"",rating:4.7,reviews:145},
+  {id:7,name:"Office File Binder Set",author:null,category:"office",emoji:"🗂️",price:450,original:null,stock:0,badge:"",rating:4.4,reviews:28},
+  {id:8,name:"A4 Paper Ream (500 Sheets)",author:null,category:"office",emoji:"📄",price:780,original:850,stock:85,badge:"",rating:4.6,reviews:52},
+  {id:9,name:"English Literature - OL",author:"Cambridge Press",category:"educational",emoji:"📙",price:720,original:null,stock:33,badge:"",rating:4.8,reviews:91},
+  {id:10,name:"Art Supplies Kit",author:null,category:"school",emoji:"🎨",price:950,original:1100,stock:15,badge:"new",rating:4.9,reviews:23},
+  {id:11,name:"Island of a Thousand Mirrors",author:"Nayomi Munaweera",category:"novels",emoji:"📕",price:750,original:null,stock:12,badge:"",rating:4.6,reviews:44},
+  {id:12,name:"Whiteboard Marker Set",author:null,category:"office",emoji:"🖊️",price:320,original:null,stock:60,badge:"",rating:4.5,reviews:37},
+];
+
+let cart = [];
+let currentFilter = 'all';
+let currentSort = 'featured';
+
+// ── RENDER PRODUCTS ──
+function renderProducts() {
+  let filtered = currentFilter === 'all' ? [...products] : products.filter(p => p.category === currentFilter);
+  if(currentSort === 'price-low') filtered.sort((a,b) => a.price - b.price);
+  else if(currentSort === 'price-high') filtered.sort((a,b) => b.price - a.price);
+  else if(currentSort === 'rating') filtered.sort((a,b) => b.rating - a.rating);
+
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  if(search) filtered = filtered.filter(p => p.name.toLowerCase().includes(search) || (p.author||'').toLowerCase().includes(search));
+
+  const grid = document.getElementById('productGrid');
+  grid.innerHTML = filtered.map(p => {
+    const stockPct = Math.min(100, (p.stock / 50) * 100);
+    const oos = p.stock === 0;
+    return `
+    <div class="product-card ${oos?'out-of-stock':''}" data-id="${p.id}">
+      <div class="product-img">
+        <div class="product-img-bg"></div>
+        ${p.badge ? `<span class="badge badge-${p.badge}">${p.badge==='hot'?'🔥 Hot':p.badge==='sale'?'💥 Sale':'✨ New'}</span>` : ''}
+        <div style="font-size:64px;position:relative;z-index:1">${p.emoji}</div>
+        <div class="wishlist-btn" onclick="event.stopPropagation();toggleWish(this)">🤍</div>
+      </div>
+      <div class="product-info">
+        <div class="product-category">${{educational:'Educational',novels:'Novel',kids:"Kids' Book",school:'School Stationery',office:'Office Stationery'}[p.category]}</div>
+        <div class="product-name">${p.name}</div>
+        ${p.author ? `<div class="product-author">by ${p.author}</div>` : ''}
+        <div class="rating-row"><span class="rating-stars">${'★'.repeat(Math.round(p.rating))}${'☆'.repeat(5-Math.round(p.rating))}</span><span class="rating-count">${p.rating} (${p.reviews})</span></div>
+        <div class="product-bottom">
+          <div class="price-group">
+            ${p.original ? `<div class="original-price">Rs. ${p.original.toLocaleString()}</div>` : ''}
+            <div class="sale-price"><span class="currency">Rs. </span>${p.price.toLocaleString()}</div>
+          </div>
+          <button class="add-cart-btn" onclick="addToCart(${p.id})" ${oos?'disabled':''} title="${oos?'Stock නැත':'Cart එකට දමන්න'}">
+            ${oos ? '✕' : '+'}
+          </button>
+        </div>
+        ${oos ? '<div class="oos-label">⚠️ Stock නැත</div>' : `
+        <div class="stock-bar"><div class="stock-fill" style="width:${stockPct}%"></div></div>
+        <div class="stock-text">${p.stock > 20 ? '✅ Stock ඇත' : `⚠️ ${p.stock} ක් ඉතිරිව ඇත`}</div>`}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filterCategory(cat, el) {
+  currentFilter = cat;
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  if(el) el.classList.add('active');
+  const titles = {all:'සියලු නිෂ්පාදන',novels:'Novels',educational:'Educational Books',kids:"Kids' Books",school:'School Stationery',office:'Office Stationery'};
+  document.getElementById('productTitle').textContent = titles[cat] || 'සියලු නිෂ්පාදන';
+  renderProducts();
+  document.getElementById('products').scrollIntoView({behavior:'smooth'});
+}
+
+function sortProducts(type, el) {
+  currentSort = type;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  if(el) el.classList.add('active');
+  renderProducts();
+}
+
+function handleSearch(val) { renderProducts(); }
+
+// ── CART ──
+function addToCart(id) {
+  const p = products.find(x => x.id === id);
+  if(!p || p.stock === 0) return;
+  const existing = cart.find(x => x.id === id);
+  if(existing) existing.qty++;
+  else cart.push({...p, qty: 1});
+  updateCartBadge();
+  renderCartItems();
+  showToast(`📚 "${p.name}" Cart එකට ඇතුළත් කළා!`);
+}
+
+function updateCartBadge() {
+  const total = cart.reduce((s,i) => s+i.qty, 0);
+  document.getElementById('cartBadge').textContent = total;
+}
+
+function renderCartItems() {
+  const el = document.getElementById('cartItems');
+  const footer = document.getElementById('cartFooter');
+  if(cart.length === 0) {
+    el.innerHTML = `<div class="cart-empty"><div class="cart-empty-icon">🛒</div><h4>Cart හිස්ය</h4><p>නිෂ්පාදන add කිරීමට shopping ආරම්භ කරන්න</p></div>`;
+    footer.innerHTML = '';
+    return;
+  }
+  el.innerHTML = cart.map(item => `
+    <div class="cart-item">
+      <div class="cart-item-emoji">${item.emoji}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-price">Rs. ${(item.price * item.qty).toLocaleString()}</div>
+        <div class="qty-control">
+          <button class="qty-btn" onclick="changeQty(${item.id},-1)">−</button>
+          <span class="qty-num">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${item.id},1)">+</button>
+        </div>
+      </div>
+      <span class="remove-item" onclick="removeItem(${item.id})">🗑</span>
+    </div>`).join('');
+  const subtotal = cart.reduce((s,i) => s+i.price*i.qty, 0);
+  footer.innerHTML = `
+    <div class="cart-total">
+      <span class="total-label">මුළු එකතුව</span>
+      <span class="total-amount">Rs. ${(subtotal+150).toLocaleString()}</span>
+    </div>
+    <button class="checkout-btn" onclick="closeCart();openCheckout()">🛍️ Checkout →</button>
+    <p class="guest-note">🔒 Guest Checkout — ගිණුමක් අවශ්‍ය නැත</p>`;
+  updateOrderSummary();
+}
+
+function changeQty(id, delta) {
+  const item = cart.find(x => x.id === id);
+  if(!item) return;
+  item.qty = Math.max(1, item.qty + delta);
+  updateCartBadge();
+  renderCartItems();
+}
+
+function removeItem(id) {
+  cart = cart.filter(x => x.id !== id);
+  updateCartBadge();
+  renderCartItems();
+}
+
+function openCart() {
+  document.getElementById('cartOverlay').classList.add('open');
+  document.getElementById('cartDrawer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  renderCartItems();
+}
+function closeCart() {
+  document.getElementById('cartOverlay').classList.remove('open');
+  document.getElementById('cartDrawer').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ── CHECKOUT ──
+function openCheckout() {
+  updateOrderSummary();
+  document.getElementById('checkoutModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCheckout() {
+  document.getElementById('checkoutModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function updateOrderSummary() {
+  const subtotal = cart.reduce((s,i) => s+i.price*i.qty, 0);
+  document.getElementById('orderSubtotal').textContent = 'Rs. ' + subtotal.toLocaleString();
+  document.getElementById('orderTotal').textContent = 'Rs. ' + (subtotal+150).toLocaleString();
+}
+
+function updateShipping(zone) {
+  const rates = {Colombo:'Rs. 150',Gampaha:'Rs. 200',Kandy:'Rs. 250',Galle:'Rs. 300',Matara:'Rs. 300',Jaffna:'Rs. 400',Other:'Rs. 350'};
+  const rate = rates[zone] || 'Rs. 150';
+  document.getElementById('checkoutShipping').value = rate;
+  document.getElementById('orderShipping').textContent = rate;
+  const subtotal = cart.reduce((s,i) => s+i.price*i.qty, 0);
+  const shippingNum = parseInt(rate.replace('Rs. ','').replace(',',''));
+  document.getElementById('orderTotal').textContent = 'Rs. ' + (subtotal + shippingNum).toLocaleString();
+}
+
+function selectPayment(el) {
+  document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+  el.classList.add('selected');
+  const val = el.querySelector('input').value;
+  document.getElementById('bankUpload').style.display = val === 'bank' ? 'block' : 'none';
+}
+
+function placeOrder() {
+  closeCheckout();
+  showToast('🎉 ඔබේ ඇණවුම සාර්ථකව ලැබිණි! SMS confirm කෙරේ.');
+  cart = [];
+  updateCartBadge();
+  renderCartItems();
+}
+
+// ── TRACKING ──
+function trackOrder() {
+  const val = document.getElementById('trackInput').value.trim();
+  if(!val) { showToast('⚠️ Order Number ඇතුළු කරන්න'); return; }
+  document.getElementById('trackResult').style.display = 'block';
+  document.getElementById('trackResult').scrollIntoView({behavior:'smooth'});
+}
+
+// ── SHIPPING CALC ──
+function calcShipping() {
+  const zone = document.getElementById('shippingZone').value;
+  const weight = document.getElementById('shippingWeight').value;
+  if(!zone || !weight) return;
+  const baseRates = {colombo:100,western:150,other:250,north:350};
+  const weightMult = {0.5:1,1:1.2,2:1.5,5:2,10:3};
+  const base = baseRates[zone] || 200;
+  const mult = weightMult[weight] || 1;
+  const total = Math.round(base * mult);
+  const notes = {colombo:'Colombo: 24 පැය ඇතුළත',western:'Western Province: 1-2 දින',other:'ද්‍රෝණිය: 2-3 දින',north:'උතුරු/නැගෙනහිර: 3-5 දින'};
+  document.getElementById('calcAmount').textContent = 'Rs. ' + total;
+  document.getElementById('calcNote').textContent = notes[zone] || '';
+  document.getElementById('calcResult').classList.add('show');
+}
+
+// ── WISHLIST ──
+function toggleWish(el) {
+  el.textContent = el.textContent === '🤍' ? '❤️' : '🤍';
+}
+
+// ── ADMIN ──
+let adminMode = false;
+function toggleAdmin() {
+  adminMode = !adminMode;
+  document.getElementById('adminBar').classList.toggle('show', adminMode);
+  if(adminMode) showToast('⚙️ Admin Mode ආරම්භ විය');
+}
+
+// ── TOAST ──
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ── INIT ──
+renderProducts();
+</script>
+</body>
+</html>
